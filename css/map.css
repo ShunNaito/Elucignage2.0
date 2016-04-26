@@ -1,0 +1,25 @@
+#mapLeftPane{
+    float:left;
+    width:49%;
+    height:100%;
+    padding-right: 1px;
+    border-right: 1px solid black;
+}
+
+#mapRightPane{
+    float:right;
+    width:49%;
+    height:100%;
+}
+
+#africa{
+    position: relative;
+    width:100%;
+    height:100%;
+}
+
+#usa{
+    position: relative;
+    width:100%;
+    height:100%;
+}
