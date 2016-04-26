@@ -1,3 +1,4 @@
+var graph = {};
 // グラフの表示領域を設定
 var margin = {top: 50, right: 20, bottom: 30, left: 50};
 var width = window.innerWidth/10*6.8 - margin.left - margin.right;
@@ -30,9 +31,7 @@ var svg = d3.select("#graph").append("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-//　グラフを描画する関数
-function drawGraph(statisticsName, articleDate){
-  $('#graph svg text').empty();
+graph.create = function(data) {
   //グラフタイトル追加
   d3.select("#graph").select("svg").append('text')
   .attr({
@@ -41,35 +40,21 @@ function drawGraph(statisticsName, articleDate){
     fill: "black",
     "font-size":20 //ここを変数にする
   })
-  .text(function(){
-    var counrty = {'close':'合計', 'GIN':'ギニア', 'LBR':'リベリア', 'SLE':'シエラレオネ' ,'NGA':'ナイジェリア' ,'SEN':'セネガル' ,'USA':'アメリカ', 'MLI':"マリ", 'ESP':"スペイン"};
-    return "エボラ感染者数―"+counrty[statisticsName];
-  });
+  .text("エボラ感染者数―合計");
 
-  $('#graph g').empty();
+  var countryNameArray = Object.keys(data[0]);
 
-  // データを読み込む
-  d3.csv("data/Total.csv")
-  .row(function(d){   // 行単位で読み込んで処理
-    // 1行目が日本語なので安全のためラベル名など割り当て直す
-    //GIN,LBR,SLE,NGA,SEN,USA
-    // 将来的には国の省略語と名前（英語や日本語）が全て対応づくイメージ
-    return {date : d.date, close : d["close"], GIN : d["ギニア"], LBR : d["リベリア"], SLE : d["シエラレオネ"], NGA : d["ナイジェリア"], SEN : d["セネガル"], USA : d["アメリカ"], MLI : d["マリ"], ESP : d["スペイン"] }
-  })
-  .get(function(error, data) {
-    var countryNameArray = Object.keys(data[0]);
-    // データをフォーマット
+  // データをフォーマット
     data.forEach(function(d) {
-      d.date = parseDate(d.date);
       for(var i=1; i<=countryNameArray.length-1; i++){
         d[countryNameArray[i]] =+ d[countryNameArray[i]];
       }
     });
 
-    // 線の定義
+  // 線の定義
     var line = d3.svg.line()
     .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d[statisticsName]); });
+    .y(function(d) { return y(d.close); });
 
     var dataMin; //データセットの最小値
     var dataMax; //データ・セットの最大値
@@ -98,7 +83,7 @@ function drawGraph(statisticsName, articleDate){
     // データを入力ドメインとして設定
     // 同時にextentで目盛りの単位が適切になるようにする
     x.domain(d3.extent(data, function(d) { return d.date; })).clamp(true);
-    y.domain(d3.extent(data, function(d) { return d[statisticsName]; }));
+    y.domain(d3.extent(data, function(d) { return d.close; }));
 
     // x軸をsvgに表示
     svg.append("g")
@@ -123,28 +108,6 @@ function drawGraph(statisticsName, articleDate){
         .attr("class", "line")
         .attr("d", line);
 
-    svg.append("g")
-       .attr("class", "icon")
-       .attr("clip-path", "url(#clip)")
-       .selectAll('.icon')
-       .data(articleDate)
-       .enter()
-       .append('line')
-       .attr("x1", function(d) {
-          return x(d.date);
-       })
-       .attr("y1", function(d) {
-          return height;
-       })
-      .attr("x2", function(d) {
-          return x(d.date);
-       })
-       .attr("y2", function(d) {
-          return 0;
-       })
-      .attr("stroke", 'gray')
-      .attr("opacity", '0.9');
-
     var focus = svg.append("g")
         .attr("class", "focus")
         .style("display", "none");
@@ -160,11 +123,10 @@ function drawGraph(statisticsName, articleDate){
           .attr("x1", 0).attr("x2", 0) // vertical line so same value on each
           .attr("y1", 0).attr("y2", height); // top to bottom
 
-
       var dragListener = d3.behavior.drag()
-	      .on("dragstart", function() { console.log("dragstart"); })
-	      .on("drag", dragmove)
-	      .on("dragend", function() { console.log("dragend"); });
+        .on("dragstart", function() { console.log("dragstart"); })
+        .on("drag", dragmove)
+        .on("dragend", function() { console.log("dragend"); });
 
       function dragmove() {
           var x0 = x.invert(d3.event.x),
@@ -203,5 +165,4 @@ function drawGraph(statisticsName, articleDate){
           .attr("height", height)
           .on("mouseover", function() { focus.style("display", null); })
           .call(dragListener);
-  });
-}
+};
