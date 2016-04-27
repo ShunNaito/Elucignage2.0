@@ -1,3 +1,6 @@
+// 日付データのパースを設定
+var parseDate = d3.time.format("%Y/%m/%d").parse;
+
 loadArticles("data/article.csv", function(data) {
     articles.create(data);
 });
@@ -8,8 +11,6 @@ loadStats("data/Total.csv", function(data) {
 });
 
 function loadArticles(filename, callback) {
-	// 日付データのパースを設定
-    var parseDate = d3.time.format("%Y/%m/%d").parse;
     // 新聞記事のデータを読み込む
     d3.csv(filename)
     .row(function(d){   // 行単位で読み込んで処理
@@ -28,9 +29,6 @@ function loadArticles(filename, callback) {
 }
 
 function loadStats(filename, callback) {
-	// 日付データのパースを設定
-    var parseDate = d3.time.format("%Y/%m/%d").parse;
-
     d3.csv("data/Total.csv")
 	.row(function(d) {
 	    return {date : d.date,
