@@ -79,10 +79,6 @@ countryNameArray = Object.keys(data[0]);
       return a.date - b.date;
     });
 
-    var scale = d3.scale.linear().domain([dataMin, dataMax]).range([0, 255]);
-
-    var scale1 = d3.scale.linear().domain([dataMin, dataMax]).range([0, 255]);
-
     // データを入力ドメインとして設定
     // 同時にextentで目盛りの単位が適切になるようにする
     x.domain(d3.extent(data, function(d) { return d.date; })).clamp(true);
@@ -142,16 +138,7 @@ countryNameArray = Object.keys(data[0]);
           focus.attr("transform", "translate(" + x(d.date) + ",0)");
           focus.select("text").text(d.date);
 
-          // Change highlited map region
-          for(var j=2; j<=countryNameArray.length-1; j++){
-            if(d[countryNameArray[j]] != 0){
-              var color = Math.round(scale(d[countryNameArray[j]]));
-              var color2 = 255 - Math.round(scale(d[countryNameArray[j]]));
-              $('.datamaps-subunit'+'.'+countryNameArray[j]).css('fill','rgb(255, '+color2+', 0)');
-            }else{
-              $('.datamaps-subunit'+'.'+countryNameArray[j]).css('fill','rgb(171, 221, 164)');
-            }
-          }
+          map.highlightCountry(d);
 
           // Change highlited articles
           if($('.'+Date.parse(d.date)) != null){
