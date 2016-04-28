@@ -8,6 +8,9 @@ var height = window.innerHeight/10*3 - margin.top - margin.bottom;
 //　いまいちわかっていない
 var bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
+var dataMin; //データセットの最小値
+var dataMax; //データ・セットの最大値
+
 // スケールと出力レンジの定義
 var x = d3.time.scale()
     .range([0, width]);
@@ -31,6 +34,8 @@ var svg = d3.select("#graph").append("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+var countryNameArray
+
 graph.create = function(data) {
   //グラフタイトル追加
   d3.select("#graph").select("svg").append('text')
@@ -42,7 +47,7 @@ graph.create = function(data) {
   })
   .text("エボラ感染者数―合計");
 
-  var countryNameArray = Object.keys(data[0]);
+countryNameArray = Object.keys(data[0]);
 
   // データをフォーマット
     data.forEach(function(d) {
@@ -56,8 +61,6 @@ graph.create = function(data) {
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.close); });
 
-    var dataMin; //データセットの最小値
-    var dataMax; //データ・セットの最大値
     for(var i=0; i<=data.length-1; i++){
       for(var j=2; j<=countryNameArray.length-1; j++){
           if(i==0 && j==2){
@@ -75,10 +78,6 @@ graph.create = function(data) {
     data.sort(function(a, b) {
       return a.date - b.date;
     });
-
-    var scale = d3.scale.linear().domain([dataMin, dataMax]).range([0, 255]);
-
-    var scale1 = d3.scale.linear().domain([dataMin, dataMax]).range([0, 255]);
 
     // データを入力ドメインとして設定
     // 同時にextentで目盛りの単位が適切になるようにする
@@ -139,24 +138,8 @@ graph.create = function(data) {
           focus.attr("transform", "translate(" + x(d.date) + ",0)");
           focus.select("text").text(d.date);
 
-          // Change highlited map region
-          for(var j=2; j<=countryNameArray.length-1; j++){
-            if(d[countryNameArray[j]] != 0){
-              var color = Math.round(scale(d[countryNameArray[j]]));
-              var color2 = 255 - Math.round(scale(d[countryNameArray[j]]));
-              $('.datamaps-subunit'+'.'+countryNameArray[j]).css('fill','rgb(255, '+color2+', 0)');
-            }else{
-              $('.datamaps-subunit'+'.'+countryNameArray[j]).css('fill','rgb(171, 221, 164)');
-            }
-          }
-
-          // Change highlited articles
-          if($('.'+Date.parse(d.date)) != null){
-              d3.selectAll("li").selectAll("p").style("color", "black");
-              $('.'+Date.parse(d.date)).css('color','red');
-          }else{
-              d3.selectAll("li").selectAll("p").style("color", "black");
-          }
+          map.highlightCountry(d);
+          articles.highlightArticles(d.date);
       }
 
       svg.append("rect")
