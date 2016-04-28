@@ -26,3 +26,13 @@ articles.create = function(articles) {
 	.append("p")
 	.text(function(d) { return d.text; });
 };
+
+articles.highlightArticles = function(date) {
+	// Change highlited articles
+	if($('.'+Date.parse(date)) != null){
+		d3.selectAll("li").selectAll("p").style("color", "black");
+		$('.'+Date.parse(date)).css('color','red');
+	}else{
+		d3.selectAll("li").selectAll("p").style("color", "black");
+	}
+};

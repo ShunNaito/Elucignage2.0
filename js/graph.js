@@ -139,14 +139,7 @@ countryNameArray = Object.keys(data[0]);
           focus.select("text").text(d.date);
 
           map.highlightCountry(d);
-
-          // Change highlited articles
-          if($('.'+Date.parse(d.date)) != null){
-              d3.selectAll("li").selectAll("p").style("color", "black");
-              $('.'+Date.parse(d.date)).css('color','red');
-          }else{
-              d3.selectAll("li").selectAll("p").style("color", "black");
-          }
+          articles.highlightArticles(d.date);
       }
 
       svg.append("rect")
