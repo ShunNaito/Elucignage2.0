@@ -34,7 +34,7 @@ var svg = d3.select("#graph").append("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var countryNameArray
+var countryNameArray;
 
 graph.create = function(statisticsName, data) {
   $('#graph svg text').empty();
