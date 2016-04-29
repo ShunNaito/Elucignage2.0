@@ -26,6 +26,8 @@ articles.create = function(articles) {
 	.data(articles)
 	.append("p")
 	.text(function(d) { return d.text; });
+
+	graph.addAnnotation(articles);
 };
 
 articles.highlightArticles = function(date) {
