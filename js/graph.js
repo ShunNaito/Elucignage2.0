@@ -155,3 +155,8 @@ countryNameArray = Object.keys(data[0]);
           .on("mouseover", function() { focus.style("display", null); })
           .call(dragListener);
 };
+
+graph.highlightDate = function(date){
+  $('.focus').attr("transform", "translate("+x(date)+",0)");
+  d3.select(".focus").select("text").text(date);
+}
