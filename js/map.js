@@ -38,7 +38,7 @@ map.create = function(stats) {
 	var classNames = $(this).attr("class");
 	var country = classNames.split(' ')[1];
 
-	console.log(country);
+	graph.create(country, stats);
     });
 };
 

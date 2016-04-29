@@ -36,7 +36,8 @@ var svg = d3.select("#graph").append("svg")
 
 var countryNameArray
 
-graph.create = function(data) {
+graph.create = function(statisticsName, data) {
+  $('#graph svg text').empty();
   //グラフタイトル追加
   d3.select("#graph").select("svg").append('text')
   .attr({
@@ -45,7 +46,12 @@ graph.create = function(data) {
     fill: "black",
     "font-size":20 //ここを変数にする
   })
-  .text("エボラ感染者数―合計");
+  .text(function(){
+    var counrty = {'close':'合計', 'GIN':'ギニア', 'LBR':'リベリア', 'SLE':'シエラレオネ' ,'NGA':'ナイジェリア' ,'SEN':'セネガル' ,'USA':'アメリカ', 'MLI':"マリ", 'ESP':"スペイン"};
+    return "エボラ感染者数―"+counrty[statisticsName];
+  });
+
+  $('#graph g').empty();
 
 countryNameArray = Object.keys(data[0]);
 
@@ -59,7 +65,7 @@ countryNameArray = Object.keys(data[0]);
   // 線の定義
     var line = d3.svg.line()
     .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.close); });
+    .y(function(d) { return y(d[statisticsName]); });
 
     for(var i=0; i<=data.length-1; i++){
       for(var j=2; j<=countryNameArray.length-1; j++){
@@ -82,7 +88,7 @@ countryNameArray = Object.keys(data[0]);
     // データを入力ドメインとして設定
     // 同時にextentで目盛りの単位が適切になるようにする
     x.domain(d3.extent(data, function(d) { return d.date; })).clamp(true);
-    y.domain(d3.extent(data, function(d) { return d.close; }));
+    y.domain(d3.extent(data, function(d) { return d[statisticsName]; }));
 
     // x軸をsvgに表示
     svg.append("g")

@@ -7,7 +7,7 @@ loadArticles("data/article.csv", function(data) {
 
 loadStats("data/Total.csv", function(data) {
     map.create(data);
-    graph.create(data);
+    graph.create("close",data);
 });
 
 function loadArticles(filename, callback) {
