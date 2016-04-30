@@ -34,7 +34,7 @@ var svg = d3.select("#graph").append("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-var countryNameArray
+var countryNameArray;
 
 graph.create = function(statisticsName, data) {
   $('#graph svg text').empty();
@@ -51,7 +51,10 @@ graph.create = function(statisticsName, data) {
     return "エボラ感染者数―"+counrty[statisticsName];
   });
 
-  $('#graph g').empty();
+  // $('#graph g').empty();
+  $(".line").remove();
+  $('.axis').empty();
+  $('.focus').empty();
 
 countryNameArray = Object.keys(data[0]);
 
@@ -155,3 +158,32 @@ countryNameArray = Object.keys(data[0]);
           .on("mouseover", function() { focus.style("display", null); })
           .call(dragListener);
 };
+
+graph.highlightDate = function(date){
+  $('.focus').attr("transform", "translate("+x(date)+",0)");
+  d3.select(".focus").select("text").text(date);
+}
+
+graph.addAnnotation = function(articleDate){
+    svg.append("g")
+       .attr("class", "icon")
+       .attr("clip-path", "url(#clip)")
+       .selectAll('.icon')
+       .data(articleDate)
+       .enter()
+       .append('line')
+       .attr("x1", function(d) {
+          return x(d.date);
+       })
+       .attr("y1", function(d) {
+          return height;
+       })
+      .attr("x2", function(d) {
+          return x(d.date);
+       })
+       .attr("y2", function(d) {
+          return 0;
+       })
+      .attr("stroke", 'gray')
+      .attr("opacity", '0.9');
+}

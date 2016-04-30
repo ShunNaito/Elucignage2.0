@@ -12,6 +12,7 @@ articles.create = function(articles) {
 	.style("font-size",'162.5%')
 	.style("text-decoration",'underline')
 	.on("click",function(d){
+		graph.highlightDate(d.date);
 		if($('.'+Date.parse(d.date)) != null){
 			d3.selectAll("li").selectAll("p").style("color", "black");
 		$('.'+Date.parse(d.date)).css('color','red');
@@ -25,6 +26,8 @@ articles.create = function(articles) {
 	.data(articles)
 	.append("p")
 	.text(function(d) { return d.text; });
+
+	graph.addAnnotation(articles);
 };
 
 articles.highlightArticles = function(date) {

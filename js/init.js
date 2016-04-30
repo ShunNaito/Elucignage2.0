@@ -1,13 +1,13 @@
 // 日付データのパースを設定
 var parseDate = d3.time.format("%Y/%m/%d").parse;
 
-loadArticles("data/article.csv", function(data) {
-    articles.create(data);
+loadStats("data/Total.csv", function(data) {
+    graph.create("close",data);
+    map.create(data);
 });
 
-loadStats("data/Total.csv", function(data) {
-    map.create(data);
-    graph.create("close",data);
+loadArticles("data/article.csv", function(data) {
+    articles.create(data);
 });
 
 function loadArticles(filename, callback) {
