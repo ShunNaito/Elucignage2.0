@@ -1,4 +1,6 @@
+//　グラフオブジェクト
 var graph = {};
+
 // グラフの表示領域を設定
 var margin = {top: 50, right: 20, bottom: 30, left: 50};
 var width = window.innerWidth/10*6.8 - margin.left - margin.right;
@@ -34,9 +36,12 @@ var svg = d3.select("#graph").append("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+//　統計データの項目名を格納する配列
 var countryNameArray;
 
+//グラフを描画する関数
 graph.create = function(statisticsName, data) {
+  //グラフタイトル追加
   $('#graph svg text').empty();
   //グラフタイトル追加
   d3.select("#graph").select("svg").append('text')
@@ -51,12 +56,13 @@ graph.create = function(statisticsName, data) {
     return "エボラ感染者数―"+counrty[statisticsName];
   });
 
-  // $('#graph g').empty();
+　//折れ線グラフと軸、アノテーションを消去
   $(".line").remove();
   $('.axis').empty();
   $('.focus').empty();
 
-countryNameArray = Object.keys(data[0]);
+  //項目名を取得
+  countryNameArray = Object.keys(data[0]);
 
   // データをフォーマット
     data.forEach(function(d) {
@@ -70,6 +76,7 @@ countryNameArray = Object.keys(data[0]);
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d[statisticsName]); });
 
+　　// 統計データ全ての値から最大値と最小値を求める
     for(var i=0; i<=data.length-1; i++){
       for(var j=2; j<=countryNameArray.length-1; j++){
           if(i==0 && j==2){
@@ -116,11 +123,12 @@ countryNameArray = Object.keys(data[0]);
         .attr("class", "line")
         .attr("d", line);
 
+    // アノテーションの付与
     var focus = svg.append("g")
         .attr("class", "focus")
         .style("display", "none");
 
-        focus.append("circle")
+    focus.append("circle")
       .attr("r", 4.5);
 
       focus.append("text")
@@ -131,6 +139,7 @@ countryNameArray = Object.keys(data[0]);
           .attr("x1", 0).attr("x2", 0) // vertical line so same value on each
           .attr("y1", 0).attr("y2", height); // top to bottom
 
+      //　グラフをドラッグする機能
       var dragListener = d3.behavior.drag()
         .on("dragstart", function() { console.log("dragstart"); })
         .on("drag", dragmove)
@@ -159,11 +168,13 @@ countryNameArray = Object.keys(data[0]);
           .call(dragListener);
 };
 
+//　グラフの日付をハイライトする機能
 graph.highlightDate = function(date){
   $('.focus').attr("transform", "translate("+x(date)+",0)");
   d3.select(".focus").select("text").text(date);
 }
 
+//　グラフにアノテーションを付与する機能
 graph.addAnnotation = function(articleDate){
     svg.append("g")
        .attr("class", "icon")
