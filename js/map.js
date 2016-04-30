@@ -34,12 +34,13 @@ map.create = function(stats) {
     var afcicaMap = map.createDatamap("africa", "africa");
     var usaMap = map.createDatamap("usa", "usa");
 
-    $(".datamaps-subunit").click(function() {
-	var classNames = $(this).attr("class");
-	var country = classNames.split(' ')[1];
-
-	graph.create(country, stats);
-    });
+    for(var j=2; j<=countryNameArray.length-1; j++){
+			$('.datamaps-subunit'+'.'+countryNameArray[j]).click(function() {
+			var classNames = $(this).attr("class");
+			var country = classNames.split(' ')[1];
+			graph.create(country, stats);
+	    });
+	}
 };
 
 map.highlightCountry = function(d){
