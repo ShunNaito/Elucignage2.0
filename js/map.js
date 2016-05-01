@@ -1,20 +1,23 @@
+//　マップオブジェクト
 var map = {};
 
+//　地図を生成する関数
 map.createDatamap = function(id, type) {
     var buildSetProjection = function(center, rotate, scale) {
-	var setProjection = function(element) {
-	    var projection = d3.geo.equirectangular()
-		    .center(center)
-		    .rotate(rotate)
-		    .scale(scale)
-		    .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
-	    var path = d3.geo.path()
-		    .projection(projection);
-	    return {path: path, projection: projection};
-	};
+		var setProjection = function(element) {
+		    var projection = d3.geo.equirectangular()
+			    .center(center)
+			    .rotate(rotate)
+			    .scale(scale)
+			    .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+		    var path = d3.geo.path()
+			    .projection(projection);
+		    return {path: path, projection: projection};
+		};
 	return setProjection;
-    };
+	};
 
+	// type（地域）から生成する地図の中心座標を設定
     var setProjection;
     if (type == "africa") {
 		setProjection = buildSetProjection([20, 5], [4.4, 0], 230);
@@ -22,6 +25,7 @@ map.createDatamap = function(id, type) {
 		setProjection = buildSetProjection([-115, 35], [4.4, 0], 230);
     }
 
+    // 地図の要素やスコープなどを設定
     var map = new Datamap({
 		element: document.getElementById(id),
 		scope: "world",
@@ -30,6 +34,7 @@ map.createDatamap = function(id, type) {
     return map;
 };
 
+//　地図の表示とグラフへアクセスする機能の追加
 map.create = function(stats) {
     var afcicaMap = map.createDatamap("africa", "africa");
     var usaMap = map.createDatamap("usa", "usa");
@@ -43,16 +48,14 @@ map.create = function(stats) {
 	}
 };
 
+//　地図上の国をハイライトする関数
 map.highlightCountry = function(d){
 	scale = d3.scale.linear().domain([dataMin, dataMax]).range([0, 255]);
     scale1 = d3.scale.linear().domain([dataMin, dataMax]).range([0, 255]);
-	// var countryNameArray = Object.keys(d);
 	// Change highlited map region
 	for(var j=2; j<=countryNameArray.length-1; j++){
         if(d[countryNameArray[j]] != 0){
-        	//var color = Math.round(scale(d[countryNameArray[j]]));
         	var color2 = 255 - Math.round(scale(d[countryNameArray[j]]));
-
         	$('.datamaps-subunit'+'.'+countryNameArray[j]).css('fill','rgb(255, '+color2+', 0)');
         }else{
         	$('.datamaps-subunit'+'.'+countryNameArray[j]).css('fill','rgb(171, 221, 164)');

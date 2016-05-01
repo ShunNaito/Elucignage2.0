@@ -39,6 +39,11 @@ var svg = d3.select("#graph").append("svg")
 //　統計データの項目名を格納する配列
 var countryNameArray;
 
+// アノテーションの付与
+var focus = svg.append("g")
+    .attr("class", "focus")
+    .style("display", "none");
+
 //グラフを描画する関数
 graph.create = function(statisticsName, data) {
   //グラフタイトル追加
@@ -123,11 +128,6 @@ graph.create = function(statisticsName, data) {
         .attr("class", "line")
         .attr("d", line);
 
-    // アノテーションの付与
-    var focus = svg.append("g")
-        .attr("class", "focus")
-        .style("display", "none");
-
     focus.append("circle")
       .attr("r", 4.5);
 
@@ -171,7 +171,7 @@ graph.create = function(statisticsName, data) {
 //　グラフの日付をハイライトする機能
 graph.highlightDate = function(date){
   $('.focus').attr("transform", "translate("+x(date)+",0)");
-  d3.select(".focus").select("text").text(date);
+  focus.select("text").text(date);
 }
 
 //　グラフにアノテーションを付与する機能

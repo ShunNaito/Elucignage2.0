@@ -1,6 +1,9 @@
+//　記事オブジェクト
 var articles = {};
 
+//　記事を生成する関数
 articles.create = function(articles) {
+	//記事の表題を生成する処理
     d3.select("#articlePane").selectAll("li")
 	.data(articles)
 	.enter()
@@ -22,6 +25,7 @@ articles.create = function(articles) {
 	})
 	.text(function(d) { return d.hyodai; })
 
+	//記事の表題を生成する処理
 	d3.select("#articlePane").selectAll("li")
 	.data(articles)
 	.append("p")
@@ -30,6 +34,7 @@ articles.create = function(articles) {
 	graph.addAnnotation(articles);
 };
 
+//　記事をハイライトする関数
 articles.highlightArticles = function(date) {
 	// Change highlited articles
 	if($('.'+Date.parse(date)) != null){

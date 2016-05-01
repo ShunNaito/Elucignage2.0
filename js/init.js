@@ -1,15 +1,18 @@
 // 日付データのパースを設定
 var parseDate = d3.time.format("%Y/%m/%d").parse;
 
+//　統計データを読み込み、グラフを描画する関数と地図を生成する関数にデータを渡す
 loadStats("data/Total.csv", function(data) {
     graph.create("close",data);
     map.create(data);
 });
 
+//　記事データを読み込み、記事を生成する関数にデータを渡す
 loadArticles("data/article.csv", function(data) {
     articles.create(data);
 });
 
+// 記事データをフォーマットする関数
 function loadArticles(filename, callback) {
     // 新聞記事のデータを読み込む
     d3.csv(filename)
@@ -28,6 +31,7 @@ function loadArticles(filename, callback) {
     });
 }
 
+// 統計データをフォーマットする関数
 function loadStats(filename, callback) {
     d3.csv("data/Total.csv")
 	.row(function(d) {
