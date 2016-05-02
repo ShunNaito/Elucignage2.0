@@ -22,6 +22,7 @@ articles.create = function(articles) {
 		}else{
 			d3.selectAll("li").selectAll("p").style("color", "black");
 		}
+		map.highlightSelectArea(d.area);
 	})
 	.text(function(d) { return d.hyodai; })
 

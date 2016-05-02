@@ -62,3 +62,17 @@ map.highlightCountry = function(d){
         }
     }
 }
+
+var katakanaToInitial = function (str) {
+    return str.replace(/アメリカ/g, 'USA');
+};
+
+map.highlightSelectArea = function(area) {
+	if(area != ""){
+		initialArea = katakanaToInitial(area);
+		console.log(initialArea);
+		$('.datamaps-subunit'+'.'+initialArea).css('stroke','rgb(255, 0, 0)');
+	}else{
+		$('.datamaps-subunit'+'.'+initialArea).css('stroke','rgb(255, 255, 255)');
+	}
+}
