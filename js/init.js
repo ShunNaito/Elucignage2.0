@@ -20,7 +20,7 @@ function loadArticles(filename, callback) {
 	    // 1行目が日本語なのでラベル名など割り当て直す
 	    //GIN,LBR,SLE,NGA,SEN,USA
 	    // 将来的には国の省略語と名前（英語や日本語）が全て対応づくイメージ
-	    return {date : d.date, hyodai : d["表題"], text : d.text}
+	    return {date : d.date, hyodai : d["表題"], text : d.text, area : d["場所1"]}
 	  })
     .get(function(error, data) {
 		data.forEach(function(d) {
