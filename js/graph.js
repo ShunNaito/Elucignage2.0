@@ -1,4 +1,4 @@
-//　グラフオブジェクト
+// グラフオブジェクト
 var graph = {};
 
 // グラフの表示領域を設定
@@ -6,8 +6,8 @@ var margin = {top: 50, right: 20, bottom: 30, left: 50};
 var width = window.innerWidth/10*6.8 - margin.left - margin.right;
 var height = window.innerHeight/10*3 - margin.top - margin.bottom;
 
-//　ドラッグのところで使われている
-//　いまいちわかっていない
+// ドラッグのところで使われている
+// いまいちわかっていない
 var bisectDate = d3.bisector(function(d) { return d.date; }).left;
 
 var dataMin; //データセットの最小値
@@ -61,7 +61,7 @@ graph.create = function(statisticsName, data) {
     return "エボラ感染者数―"+counrty[statisticsName];
   });
 
-　//折れ線グラフと軸、アノテーションを消去
+ //折れ線グラフと軸、アノテーションを消去
   $(".line").remove();
   $('.axis').empty();
   $('.focus').empty();
@@ -81,7 +81,7 @@ graph.create = function(statisticsName, data) {
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d[statisticsName]); });
 
-　　// 統計データ全ての値から最大値と最小値を求める
+  // 統計データ全ての値から最大値と最小値を求める
     for(var i=0; i<=data.length-1; i++){
       for(var j=2; j<=countryNameArray.length-1; j++){
           if(i==0 && j==2){
@@ -95,7 +95,7 @@ graph.create = function(statisticsName, data) {
       }
     }
 
-    //　時系列順にソート
+    // 時系列順にソート
     data.sort(function(a, b) {
       return a.date - b.date;
     });
@@ -139,7 +139,7 @@ graph.create = function(statisticsName, data) {
           .attr("x1", 0).attr("x2", 0) // vertical line so same value on each
           .attr("y1", 0).attr("y2", height); // top to bottom
 
-      //　グラフをドラッグする機能
+      // グラフをドラッグする機能
       var dragListener = d3.behavior.drag()
         .on("dragstart", function() { console.log("dragstart"); })
         .on("drag", dragmove)
@@ -168,13 +168,13 @@ graph.create = function(statisticsName, data) {
           .call(dragListener);
 };
 
-//　グラフの日付をハイライトする機能
+// グラフの日付をハイライトする機能
 graph.highlightDate = function(date){
   $('.focus').attr("transform", "translate("+x(date)+",0)");
   focus.select("text").text(date);
-}
+};
 
-//　グラフにアノテーションを付与する機能
+// グラフにアノテーションを付与する機能
 graph.addAnnotation = function(articleDate){
     svg.append("g")
        .attr("class", "icon")
@@ -197,4 +197,4 @@ graph.addAnnotation = function(articleDate){
        })
       .attr("stroke", 'gray')
       .attr("opacity", '0.9');
-}
+};

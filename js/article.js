@@ -1,7 +1,7 @@
-//　記事オブジェクト
+// 記事オブジェクト
 var articles = {};
 
-//　記事を生成する関数
+// 記事を生成する関数
 articles.create = function(articles) {
 	//記事の表題を生成する処理
     d3.select("#articlePane").selectAll("li")
@@ -24,8 +24,8 @@ articles.create = function(articles) {
 		}
 		map.highlightSelectArea(d.area);
 	})
-	.text(function(d) { return d.hyodai; })
-
+	.text(function(d) { return d.hyodai; });
+    
 	//記事の表題を生成する処理
 	d3.select("#articlePane").selectAll("li")
 	.data(articles)
@@ -35,7 +35,7 @@ articles.create = function(articles) {
 	graph.addAnnotation(articles);
 };
 
-//　記事をハイライトする関数
+// 記事をハイライトする関数
 articles.highlightArticles = function(date) {
 	// Change highlited articles
 	if($('.'+Date.parse(date)) != null){

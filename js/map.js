@@ -1,7 +1,7 @@
-//　マップオブジェクト
+// マップオブジェクト
 var map = {};
 
-//　地図を生成する関数
+// 地図を生成する関数
 map.createDatamap = function(id, type) {
     var buildSetProjection = function(center, rotate, scale) {
 		var setProjection = function(element) {
@@ -34,7 +34,7 @@ map.createDatamap = function(id, type) {
     return map;
 };
 
-//　地図の表示とグラフへアクセスする機能の追加
+// 地図の表示とグラフへアクセスする機能の追加
 map.create = function(stats) {
     var afcicaMap = map.createDatamap("africa", "africa");
     var usaMap = map.createDatamap("usa", "usa");
@@ -48,7 +48,7 @@ map.create = function(stats) {
 	}
 };
 
-//　地図上の国をハイライトする関数
+// 地図上の国をハイライトする関数
 map.highlightCountry = function(d){
 	scale = d3.scale.linear().domain([dataMin, dataMax]).range([0, 255]);
     scale1 = d3.scale.linear().domain([dataMin, dataMax]).range([0, 255]);
