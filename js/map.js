@@ -64,15 +64,24 @@ map.highlightCountry = function(d){
 }
 
 var katakanaToInitial = function (str) {
-    return str.replace(/アメリカ/g, 'USA');
+    var strInitial = str
+    .replace(/アメリカ/g, 'USA')
+    .replace(/シエラレオネ/g, 'SLE');
+    return strInitial
 };
 
+// 国の周りに表示される枠線は前の選択された国の枠線を消すほうが望ましい
+// 現在の実装は全て消すようになっている
 map.highlightSelectArea = function(area) {
 	if(area != ""){
 		initialArea = katakanaToInitial(area);
-		console.log(initialArea);
+		for(var i=2; i<=countryNameArray.length-1; i++){
+			$('.datamaps-subunit'+'.'+countryNameArray[i]).css('stroke','rgb(255, 255, 255)');
+		}
 		$('.datamaps-subunit'+'.'+initialArea).css('stroke','rgb(255, 0, 0)');
 	}else{
-		$('.datamaps-subunit'+'.'+initialArea).css('stroke','rgb(255, 255, 255)');
+		for(var i=2; i<=countryNameArray.length-1; i++){
+			$('.datamaps-subunit'+'.'+countryNameArray[i]).css('stroke','rgb(255, 255, 255)');
+		}
 	}
 }
