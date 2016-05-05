@@ -66,7 +66,10 @@ map.highlightCountry = function(d){
 var katakanaToInitial = function (str) {
     var strInitial = str
     .replace(/アメリカ/g, 'USA')
-    .replace(/シエラレオネ/g, 'SLE');
+    .replace(/シエラレオネ/g, 'SLE')
+    .replace(/リベリア/g, 'LBR')
+    .replace(/スペイン/g, 'ESP')
+    .replace(/ギニア/g, 'GIN');
     return strInitial
 };
 
