@@ -44,6 +44,7 @@ map.create = function(stats) {
 			var classNames = $(this).attr("class");
 			var country = classNames.split(' ')[1];
 			graph.create(country, stats);
+			articles.countryHighlight(country);
 	    });
 	}
 };

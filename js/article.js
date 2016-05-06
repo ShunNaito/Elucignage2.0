@@ -25,7 +25,7 @@ articles.create = function(articles) {
 		map.highlightSelectArea(d.area);
 	})
 	.text(function(d) { return d.hyodai; });
-    
+
 	//記事の表題を生成する処理
 	d3.select("#articlePane").selectAll("li")
 	.data(articles)
@@ -44,4 +44,20 @@ articles.highlightArticles = function(date) {
 	}else{
 		d3.selectAll("li").selectAll("p").style("color", "black");
 	}
+};
+
+var initialToKatakana = function (str) {
+    var strKatakana = str
+    .replace(/USA/g, 'アメリカ')
+    .replace(/SLE/g, 'シエラレオネ')
+    .replace(/LBR/g, 'リベリア')
+    .replace(/ESP/g, 'スペイン')
+    .replace(/GIN/g, 'ギニア');
+    return strKatakana
+};
+
+// 記事をハイライトする関数
+articles.countryHighlight = function(country) {
+	countryKatakana = initialToKatakana(country);
+	console.log(countryKatakana);
 };
