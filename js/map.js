@@ -51,7 +51,6 @@ map.create = function(stats) {
 // 地図上の国をハイライトする関数
 map.highlightCountry = function(d){
 	scale = d3.scale.linear().domain([dataMin, dataMax]).range([0, 255]);
-    scale1 = d3.scale.linear().domain([dataMin, dataMax]).range([0, 255]);
 	// Change highlited map region
 	for(var j=2; j<=countryNameArray.length-1; j++){
         if(d[countryNameArray[j]] != 0){
