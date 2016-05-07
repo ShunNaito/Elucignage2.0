@@ -10,7 +10,7 @@ articles.create = function(articles) {
 	.append("li")
 	.append("p")
 	.attr("class",function(d) {
-	    return Date.parse(d.date);
+	    return Date.parse(d.date) + " " + d.area;
 	})
 	.style("font-size",'162.5%')
 	.style("text-decoration",'underline')
