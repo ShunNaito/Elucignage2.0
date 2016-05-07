@@ -10,7 +10,7 @@ articles.create = function(articles) {
 	.append("li")
 	.append("p")
 	.attr("class",function(d) {
-	    return Date.parse(d.date);
+	    return Date.parse(d.date) + " " + d.area;
 	})
 	.style("font-size",'162.5%')
 	.style("text-decoration",'underline')
@@ -25,7 +25,7 @@ articles.create = function(articles) {
 		map.highlightSelectArea(d.area);
 	})
 	.text(function(d) { return d.hyodai; });
-    
+
 	//記事の表題を生成する処理
 	d3.select("#articlePane").selectAll("li")
 	.data(articles)
@@ -43,5 +43,27 @@ articles.highlightArticles = function(date) {
 		$('.'+Date.parse(date)).css('color','red');
 	}else{
 		d3.selectAll("li").selectAll("p").style("color", "black");
+	}
+};
+
+var initialToKatakana = function (str) {
+    var strKatakana = str
+    .replace(/USA/g, 'アメリカ')
+    .replace(/SLE/g, 'シエラレオネ')
+    .replace(/LBR/g, 'リベリア')
+    .replace(/ESP/g, 'スペイン')
+    .replace(/GIN/g, 'ギニア');
+    return strKatakana
+};
+
+// 記事をハイライトする関数
+articles.countryHighlight = function(country) {
+	countryKatakana = initialToKatakana(country);
+	// Change highlited articles
+	if($('.'+ countryKatakana) != null){
+		d3.selectAll("li").selectAll("p").style("border", "none");
+		$('.' + countryKatakana).css('border-style','solid');
+	}else{
+		d3.selectAll("li").selectAll("p").style("border", "none");
 	}
 };
