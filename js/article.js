@@ -59,5 +59,11 @@ var initialToKatakana = function (str) {
 // 記事をハイライトする関数
 articles.countryHighlight = function(country) {
 	countryKatakana = initialToKatakana(country);
-	console.log(countryKatakana);
+	// Change highlited articles
+	if($('.'+ countryKatakana) != null){
+		d3.selectAll("li").selectAll("p").style("border", "none");
+		$('.' + countryKatakana).css('border-style','solid');
+	}else{
+		d3.selectAll("li").selectAll("p").style("border", "none");
+	}
 };
