@@ -63,6 +63,7 @@ articles.countryHighlight = function(country) {
 	if($('.'+ countryKatakana) != null){
 		d3.selectAll("li").selectAll("p").style("border", "none");
 		$('.' + countryKatakana).css('border-style','solid');
+		$('.' + countryKatakana).css('border-color','red');
 	}else{
 		d3.selectAll("li").selectAll("p").style("border", "none");
 	}
