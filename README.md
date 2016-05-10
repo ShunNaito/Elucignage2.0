@@ -11,6 +11,7 @@ The system supports users' analysis of time-series data in an exploratory manner
 ## Usage
 
 Firefox: open index.html in browser.
+
 Google Chrome or Safari: python -m SimpleHTTPServer 8888 and open http://localhost:8888/Elucignage2.0/ in browser.
 
 I recommend Google Chrome.
