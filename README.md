@@ -1,6 +1,6 @@
 # Elucignage2.0
 
-##Overview
+## Overview
 
 The system supports users’ analysis of time-series data in an exploratory manner.
 
