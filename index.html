@@ -12,24 +12,35 @@
     <script src="lib/datamaps.all.min.js"></script>
   </head>
   <body>
-    <div id= "leftPanel">
-      <div id="mapPane">
-        <div id="mapLeftPane">
-          <div id="africa"></div>
+    <div id= "topPanel">
+      <p>
+        <select name="topic">
+        <option value="選択肢1">エボラ出血熱</option>
+        <option value="選択肢2">熊本地震</option>
+        <option value="選択肢3">東日本大震災</option>
+        <option value="選択肢4">気温</option>
+        <option value="選択肢5">台風</option>
+        </select>
+      </p>
+    </div>
+    <div id= "mainPanel">
+      <div id= "leftPanel">
+        <div id="mapPane">
+          <div id="mapLeftPane">
+            <div id="africa"></div>
+          </div>
+          <div id="mapRightPane">
+            <div id="usa"></div>
+          </div>
         </div>
-        <div id="mapRightPane">
-          <div id="usa"></div>
+        <div id="graphPane">
+          <div id="graph"></div>
         </div>
       </div>
-      <div id="graphPane">
-        <div id="graph"></div>
+      <div id="rightPanel">
+        <div id="articlePane"></div>
       </div>
     </div>
-
-    <div id="rightPanel">
-      <div id="articlePane"></div>
-    </div>
-
     <script src="./js/graph.js"></script>
     <script src="./js/article.js"></script>
     <script src="./js/map.js"></script>

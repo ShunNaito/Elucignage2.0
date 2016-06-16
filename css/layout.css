@@ -1,3 +1,13 @@
+#mainPanel{
+	height:90%;
+}
+
+select {
+	width: 25%;
+	font-size: 24px;
+	border:1px;
+}
+
 #leftPanel{
 	float:left;
 	width:69%;
