@@ -20,7 +20,7 @@ map.createDatamap = function(id, type) {
 	// type（地域）から生成する地図の中心座標を設定
     var setProjection;
     if (type == "africa") {
-		setProjection = buildSetProjection([20, 5], [4.4, 0], 230);
+		setProjection = buildSetProjection([10, 23], [4.4, 0], 500);
     }else if (type == "usa") {
 		setProjection = buildSetProjection([-115, 35], [4.4, 0], 230);
     }
