@@ -44,6 +44,9 @@ var focus = svg.append("g")
     .attr("class", "focus")
     .style("display", "none");
 
+// 量的なスケールの代わりに、category10()を使っている。
+var color = d3.scale.category10();
+
 //グラフを描画する関数
 graph.create = function(statisticsName, data) {
   //グラフタイトル追加
@@ -62,9 +65,9 @@ graph.create = function(statisticsName, data) {
   });
 
  //折れ線グラフと軸、アノテーションを消去
-  $(".line").remove();
+  // $(".line").remove();
   $('.axis').empty();
-  $('.focus').empty();
+  // $('.focus').empty();
 
   //項目名を取得
   countryNameArray = Object.keys(data[0]);
@@ -103,7 +106,7 @@ graph.create = function(statisticsName, data) {
     // データを入力ドメインとして設定
     // 同時にextentで目盛りの単位が適切になるようにする
     x.domain(d3.extent(data, function(d) { return d.date; })).clamp(true);
-    y.domain(d3.extent(data, function(d) { return d[statisticsName]; }));
+    y.domain([dataMin, dataMax]);
 
     // x軸をsvgに表示
     svg.append("g")
@@ -126,7 +129,12 @@ graph.create = function(statisticsName, data) {
     svg.append("path")
         .datum(data)
         .attr("class", "line")
-        .attr("d", line);
+        .attr("d", line)
+        .attr("stroke", function(){
+          var random = d3.random.normal(0, 5);
+          // console.log(Math.floor(random()));
+          return color(Math.floor(random()));
+        });
 
     focus.append("circle")
       .attr("r", 4.5);

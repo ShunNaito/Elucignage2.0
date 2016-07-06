@@ -3,7 +3,7 @@ var parseDate = d3.time.format("%Y/%m/%d").parse;
 
 // 統計データを読み込み、グラフを描画する関数と地図を生成する関数にデータを渡す
 loadStats("data/Total.csv", function(data) {
-    graph.create("close",data);
+    graph.create("LBR",data);
     map.create(data);
 });
 
