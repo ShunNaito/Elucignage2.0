@@ -1,5 +1,7 @@
 // 日付データのパースを設定
 var parseDate = d3.time.format("%Y/%m/%d").parse;
+// 日付データのパースを設定
+var parsePubDate = d3.time.format("%Y-%m-%d").parse;
 
 // 統計データを読み込み、グラフを描画する関数と地図を生成する関数にデータを渡す
 loadStats("data/Total.csv", function(data) {
@@ -8,7 +10,7 @@ loadStats("data/Total.csv", function(data) {
 });
 
 // 記事データを読み込み、記事を生成する関数にデータを渡す
-loadArticles("data/article.csv", function(data) {
+loadArticles("data/test.csv", function(data) {
     articles.create(data);
 });
 
@@ -20,11 +22,11 @@ function loadArticles(filename, callback) {
 	    // 1行目が日本語なのでラベル名など割り当て直す
 	    //GIN,LBR,SLE,NGA,SEN,USA
 	    // 将来的には国の省略語と名前（英語や日本語）が全て対応づくイメージ
-            return {date : d.date, hyodai : d["表題"], text : d.text, area : d["場所1"]};
+            return {date : d.pubdate, hyodai : d.headline, text : d.body, area : d["場所1"]};
 	  })
     .get(function(error, data) {
 		data.forEach(function(d) {
-		    d.date = parseDate(d.date);
+		    d.date = parsePubDate(d.date);
 		});
 		//articles.create(data)と処理は同じ
 		callback(data);
